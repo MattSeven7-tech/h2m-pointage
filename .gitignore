@@ -1,0 +1,16 @@
+# Variables d'environnement — NE JAMAIS COMMITTER
+.env.local
+.env
+
+# Vercel
+.vercel/
+
+# Node (si npm est utilisé localement pour canvas)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

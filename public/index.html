@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Pointage H2M</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B4F8A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Pointage H2M">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+</head>
+<body>
+  <!-- Modal saisie email -->
+  <div id="modal-email" class="modal" hidden>
+    <div class="modal-content">
+      <div class="modal-logo">H2M Express</div>
+      <h2>Connexion</h2>
+      <p>Entrez votre adresse email professionnelle</p>
+      <input type="email" id="input-email" placeholder="prenom.nom@h2mexpress.fr" autocomplete="email">
+      <p id="email-error" class="error-msg" hidden></p>
+      <button id="btn-valider-email" class="btn btn-primary">Valider</button>
+    </div>
+  </div>
+
+  <!-- App principale -->
+  <div id="app" hidden>
+    <!-- En-tête -->
+    <header class="app-header">
+      <div class="header-left">
+        <span class="header-logo">H2M</span>
+        <span id="employe-prenom" class="header-name">Chargement...</span>
+      </div>
+      <div id="horloge" class="header-clock">--:--</div>
+    </header>
+
+    <!-- Statut GPS -->
+    <div class="gps-card">
+      <div class="gps-status">
+        <span id="gps-icon" class="gps-dot dot-waiting"></span>
+        <span id="gps-label">Localisation en cours...</span>
+      </div>
+      <div id="gps-accuracy" class="gps-accuracy" hidden></div>
+    </div>
+
+    <!-- Lieu et zone -->
+    <div class="lieu-card">
+      <div class="zone-indicator">
+        <div id="zone-dot" class="zone-dot dot-neutral"></div>
+        <div class="zone-info">
+          <div id="lieu-nom" class="lieu-nom">Recherche du lieu...</div>
+          <div id="lieu-adresse" class="lieu-adresse"></div>
+        </div>
+      </div>
+      <div id="distance-info" class="distance-info" hidden></div>
+    </div>
+
+    <!-- Dernier pointage -->
+    <div id="dernier-pointage" class="dernier-pointage" hidden></div>
+
+    <!-- Commentaire -->
+    <div class="commentaire-wrap">
+      <input type="text" id="input-commentaire" placeholder="Commentaire (optionnel)" maxlength="120">
+      <div class="char-count"><span id="char-left">120</span> car. restants</div>
+    </div>
+
+    <!-- Boutons pointage -->
+    <div class="buttons-row">
+      <button id="btn-entree" class="btn btn-entree" disabled>
+        <span class="btn-icon">→</span> ENTRÉE
+      </button>
+      <button id="btn-sortie" class="btn btn-sortie" disabled>
+        SORTIE <span class="btn-icon">←</span>
+      </button>
+    </div>
+
+    <!-- Message résultat -->
+    <div id="msg-result" class="msg-result" hidden></div>
+
+    <!-- Banner installation PWA -->
+    <div id="pwa-banner" class="pwa-banner" hidden>
+      <span>Installez l'application sur votre écran d'accueil</span>
+      <button id="btn-install" class="btn btn-install">Installer</button>
+      <button id="btn-close-banner" class="banner-close">✕</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <a href="/admin.html" class="footer-link">Administration</a>
+    </footer>
+  </div>
+
+  <!-- Offline notice -->
+  <div id="offline-notice" class="offline-notice" hidden>
+    <div class="offline-icon">📡</div>
+    <h2>Pas de connexion</h2>
+    <p>Le pointage nécessite une connexion internet. Reconnectez-vous et réessayez.</p>
+    <button onclick="location.reload()" class="btn btn-primary">Réessayer</button>
+  </div>
+
+  <script src="/utils.js"></script>
+  <script src="/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+</body>
+</html>

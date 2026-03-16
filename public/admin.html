@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Admin — Pointage H2M</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B4F8A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+</head>
+<body>
+  <header class="app-header admin-header">
+    <div class="header-left">
+      <span class="header-logo">H2M</span>
+      <span class="header-name">Administration</span>
+    </div>
+    <a href="/" class="header-link">← Retour</a>
+  </header>
+
+  <!-- Onglets -->
+  <div class="tabs">
+    <button class="tab active" data-tab="lieux">Lieux</button>
+    <button class="tab" data-tab="historique">Historique</button>
+  </div>
+
+  <!-- Onglet Lieux -->
+  <div id="tab-lieux" class="tab-content">
+    <div class="section-header">
+      <h2>Lieux de pointage</h2>
+      <button id="btn-nouveau-lieu" class="btn btn-primary btn-sm">+ Nouveau lieu</button>
+    </div>
+
+    <!-- Formulaire création/modification -->
+    <div id="form-lieu" class="form-card" hidden>
+      <h3 id="form-lieu-title">Nouveau lieu</h3>
+      <input type="hidden" id="lieu-edit-id">
+      <div class="form-row">
+        <label>Nom du lieu *</label>
+        <input type="text" id="lieu-nom-input" placeholder="ex: Entrepôt Rungis">
+      </div>
+      <div class="form-row">
+        <label>Adresse complète</label>
+        <input type="text" id="lieu-adresse-input" placeholder="ex: 12 Rue de l'Industrie, 94200 Ivry">
+      </div>
+      <div class="form-row">
+        <label>Latitude *</label>
+        <input type="number" id="lieu-lat-input" placeholder="48.823456" step="0.000001">
+      </div>
+      <div class="form-row">
+        <label>Longitude *</label>
+        <input type="number" id="lieu-lon-input" placeholder="2.383145" step="0.000001">
+      </div>
+      <div class="form-row">
+        <label>Rayon (mètres) * <small>Min 50m / Max 5000m</small></label>
+        <input type="number" id="lieu-rayon-input" placeholder="150" min="50" max="5000" value="150">
+      </div>
+      <div class="form-row">
+        <label>Description (interne)</label>
+        <input type="text" id="lieu-desc-input" placeholder="Notes internes">
+      </div>
+      <div class="form-actions">
+        <button id="btn-gps-lieu" class="btn btn-secondary btn-sm">📍 Ma position GPS</button>
+        <div id="gmap-link" hidden></div>
+      </div>
+      <p id="form-lieu-error" class="error-msg" hidden></p>
+      <div class="form-buttons">
+        <button id="btn-save-lieu" class="btn btn-primary">Enregistrer</button>
+        <button id="btn-cancel-lieu" class="btn btn-ghost">Annuler</button>
+      </div>
+    </div>
+
+    <div id="lieux-list" class="lieux-list">
+      <div class="loading">Chargement des lieux...</div>
+    </div>
+  </div>
+
+  <!-- Onglet Historique -->
+  <div id="tab-historique" class="tab-content" hidden>
+    <div class="filters-bar">
+      <div class="filter-row">
+        <div class="filter-group">
+          <label>Du</label>
+          <input type="date" id="filter-date-debut">
+        </div>
+        <div class="filter-group">
+          <label>Au</label>
+          <input type="date" id="filter-date-fin">
+        </div>
+      </div>
+      <div class="filter-row">
+        <div class="filter-group">
+          <label>Employé</label>
+          <select id="filter-employe">
+            <option value="">Tous</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Statut</label>
+          <select id="filter-statut">
+            <option value="">Tous</option>
+            <option value="Validé">Validé</option>
+            <option value="Refusé_hors_zone">Refusé hors zone</option>
+            <option value="Refusé_GPS_imprécis">Refusé GPS imprécis</option>
+          </select>
+        </div>
+      </div>
+      <button id="btn-filtrer" class="btn btn-primary">Filtrer</button>
+    </div>
+
+    <div id="compteurs" class="compteurs" hidden>
+      <span class="cpt cpt-total">Total : <strong id="cpt-total">0</strong></span>
+      <span class="cpt cpt-valides">Validés : <strong id="cpt-valides">0</strong></span>
+      <span class="cpt cpt-refuses">Refusés : <strong id="cpt-refuses">0</strong></span>
+    </div>
+
+    <div id="historique-table" class="table-wrap">
+      <div class="loading">Sélectionnez une période et cliquez sur Filtrer</div>
+    </div>
+
+    <button class="btn btn-ghost btn-sm btn-export-disabled" disabled title="Prévu en V2">
+      ⬇ Export CSV (V2)
+    </button>
+  </div>
+
+  <script src="/utils.js"></script>
+  <script src="/admin.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
+  </script>
+</body>
+</html>
