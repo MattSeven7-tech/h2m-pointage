@@ -72,6 +72,7 @@ async function validerEmail() {
 }
 
 async function demarrerApp(employe) {
+  document.getElementById('modal-email').hidden = true;
   document.getElementById('app').hidden = false;
   document.getElementById('employe-prenom').textContent = employe.prenom || employe.nom;
   demarrerHorloge();

@@ -4,16 +4,7 @@ const db = require('./_db/index');
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
-  if (req.headers['x-api-key'] !== process.env.API_SECRET_KEY) {
-    return res.status(401).json({
-      error: 'Unauthorized',
-      debug: {
-        receivedLength: (req.headers['x-api-key'] || '').length,
-        expectedLength: (process.env.API_SECRET_KEY || '').length,
-        receivedPreview: req.headers['x-api-key'] ? req.headers['x-api-key'].substring(0, 4) + '...' : 'none',
-      }
-    });
-  }
+  if (req.headers['x-api-key'] !== process.env.API_SECRET_KEY) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const employes = await db.getEmployes();
