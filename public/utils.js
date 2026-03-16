@@ -2,7 +2,7 @@
 
 // Clé API partagée frontend ↔ backend (protège les endpoints, pas la clé Airtable)
 // ⚠️ Remplacer par la valeur exacte de API_SECRET_KEY définie dans Vercel
-const API_KEY = 'QeEho0CJdtVticaINZhHwbdOVjYXZIL5cuxAlFd4b4w=';
+const API_KEY = 'h2m-pointage-secret-2026';
 
 // ── Géofencing ────────────────────────────────────────────────────
 function haversineDistance(lat1, lon1, lat2, lon2) {
