@@ -1,7 +1,7 @@
 // service-worker.js — Cache offline PWA H2M
 // Stratégie : cache-first pour assets statiques, network-first pour /api/
 
-const CACHE_NAME = 'pointage-h2m-v1';
+const CACHE_NAME = 'pointage-h2m-v2';
 const STATIC_ASSETS = [
   '/',
   '/style.css',
